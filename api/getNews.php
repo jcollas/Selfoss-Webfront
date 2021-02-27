@@ -33,6 +33,10 @@ if ($mysqli->connect_errno) {
     printf("Connect failed: %s\n", $mysqli->connect_error);
     exit();
 }
+if (isset($dbcharset) && $dbcharset !== '') {
+    $mysqli->set_charset($dbcharset);
+}
+
 switch ($cat) {
   case "s":
       $offs = $offs * $nrec;
@@ -78,6 +82,7 @@ while($row = mysqli_fetch_assoc($result)){
    $rSet[] = $row;
 }
 header("Content-Type: application/json");
+
 echo json_encode($rSet);
 
 $result -> free();

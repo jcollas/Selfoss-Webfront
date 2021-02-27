@@ -64,7 +64,7 @@
                 tPage(oReply, tag, vcnt);
               },
               error: function(jqXHR, textStatus) {
-                showToast('alert-danger','Request failed: ' + textStatus,imto)
+                showToast('alert-danger','Request failed: ' + jqXHR.statusText,imto)
               }
           });
        }
@@ -82,7 +82,7 @@
                 uPage(oReply, cat, tag, cnt, page);
               },
               error: function(jqXHR, textStatus) {
-                showToast('alert-danger','Request failed: ' + textStatus,imto)
+                showToast('alert-danger','Request failed: ' + jqXHR.statusText,imto)
               }
           });
        }

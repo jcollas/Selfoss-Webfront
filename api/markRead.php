@@ -20,6 +20,10 @@ if ($mysqli->connect_errno) {
     printf("Connect failed: %s\n", $mysqli->connect_error);
     exit();
 }
+if (isset($dbcharset) && $dbcharset !== '') {
+    $mysqli->set_charset($dbcharset);
+}
+
 if ($star == "1") {
   $starqry = $mysqli->prepare("UPDATE items SET starred = 1 WHERE id = ?");
   $starqry->bind_param("i", $id);

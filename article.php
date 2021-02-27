@@ -16,6 +16,9 @@ if ($mysqli->connect_errno) {
     printf("Connect failed: %s\n", $mysqli->connect_error);
     exit();
 }
+if (isset($dbcharset) && $dbcharset !== '') {
+    $mysqli->set_charset($dbcharset);
+}
 
 $stmt = $mysqli->prepare("SELECT DISTINCT I.title, I.content, I.link, I.datetime as 'updatetime', I.author, S.title as 'source', S.tags, I.starred, S.id AS 'sid', I.unread FROM items I INNER JOIN sources S ON I.source = S.id WHERE I.id = ?");
 $stmt->bind_param("i", $id);
@@ -57,7 +60,7 @@ function searchKey($id, $array) {
     <title><?php echo $npName ?></title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/assets/bootstrap-4.5.2-dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="assets/bootstrap-4.5.2-dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <link rel="icon" href="assets/ico/favicon.ico">
     <script src="assets/js/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
     <script src="assets/bootstrap-4.5.2-dist/js/bootstrap.min.js"></script>
@@ -69,7 +72,7 @@ function searchKey($id, $array) {
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&family=UnifrakturMaguntia&display=swap" rel="stylesheet">    
-    <link href="/assets/css/blog.css" rel="stylesheet">
+    <link href="assets/css/blog.css" rel="stylesheet">
   </head>
   <body>
     <div class="container">

@@ -1,11 +1,12 @@
 <?php
 // Add the details for your MySQL database
-$dbserver = "selfoss.domain.com";   // The IP address or domain name of the database server
+$dbserver = "localhost";   // The IP address or domain name of the database server
 $database = "selfoss";              // The name of the database
 $username = "selfoss";              // The username for the database
-$dbpwd    = "secretPassword";       // The password for the database user
+$dbpwd    = "selfosspass";       // The password for the database user
+$dbcharset = "utf8mb4";		// The charset.  Specify if you want to override
 
-$npName = "Users's Morning Post";   // The name of your Newspaper
+$npName = "Juan's Daily Post";   // The name of your Newspaper
 $font   = "blog-header-logo";       // Use either "blog-header-logo" or "blog-header-logo-old" for a more old-fashioned font for the title
 
 $smar = 10;                         // The number of seconds to wait before an article is marked as read
@@ -22,12 +23,12 @@ $artrf = 600;                       // Number of seconds to refresh the articles
 //   There is one value for the Jumbotron with the value Top/top.
 $tags = array (
     array ("World", "world", 600, 1024, 15),
-    array ("Asia", "asia", 600, 1024, 15),
-    array ("Business", "business", 600, 1024, 15),
-    array ("Aviation", "aviation", 600, 1024, 15),
-    array ("Hong Kong", "hkg", 600, 1024, 15),
-    array ("Swiss", "swiss", 600, 1024, 15),
-    array ("Sport", "sport", 600, 1024, 15),
+    array ("US", "us", 600, 1024, 15),
+    array ("Business", "biz", 600, 1024, 15),
+    array ("Insurance", "insurance", 600, 1024, 15),
+    array ("Swift", "swift", 600, 1024, 15),
+    array ("Automation", "automation", 600, 1024, 15),
+    array ("Politics", "politics", 600, 1024, 15),
     array ("Science", "science", 600, 1024, 15),
     array ("Technology", "technology", 600, 99999, 5),
     array ("Travel", "travel", 600, 99999, 5),

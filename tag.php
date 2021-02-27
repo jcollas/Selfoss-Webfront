@@ -16,6 +16,10 @@ if ($mysqli->connect_errno) {
     printf("Connect failed: %s\n", $mysqli->connect_error);
     exit();
 }
+if (isset($dbcharset) && $dbcharset !== '') {
+    $mysqli->set_charset($dbcharset);
+}
+
 $query  = $mysqli->prepare("SELECT DISTINCT S.id, S.title, C.content, S.updatetime, S.tags, C.link, O.title AS 'source', C.author FROM (SELECT HTML_UnEncode(I.title) as 'Title', MIN(I.datetime) AS 'UpdateTime', CASE WHEN LOCATE(',', GROUP_CONCAT(S.tags)) > 0 THEN LEFT(GROUP_CONCAT(S.tags), LOCATE(',', GROUP_CONCAT(S.tags))-1) ELSE GROUP_CONCAT(S.tags) END AS 'Tags', MIN(I.id) AS 'id' FROM items I INNER JOIN sources S ON I.source = S.id WHERE (I.unread = 1 OR I.starred = 1) GROUP BY HTML_UnEncode(I.title)) S INNER JOIN items C ON S.Title = HTML_UnEncode(C.title) AND S.UpdateTime = C.DateTime INNER JOIN sources O ON C.source = O.id WHERE S.Tags = ? AND C.Content <> '[unable to retrieve full-text content]' ORDER BY UpdateTime DESC LIMIT 15");
 $query->bind_param("s", $tag);
 $query->execute();
@@ -37,7 +41,7 @@ $mysqli -> close();
     <title><?php echo $npName ?></title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/assets/bootstrap-4.5.2-dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="assets/bootstrap-4.5.2-dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <link rel="icon" href="assets/ico/favicon.ico">
     <script src="assets/js/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
     <script src="assets/bootstrap-4.5.2-dist/js/bootstrap.min.js"></script>
@@ -49,7 +53,7 @@ $mysqli -> close();
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand&family=UnifrakturMaguntia&display=swap" rel="stylesheet">    
-    <link href="/assets/css/blog.css" rel="stylesheet">
+    <link href="assets/css/blog.css" rel="stylesheet">
   </head>
   <body>
     <div class="container">
@@ -101,7 +105,7 @@ $mysqli -> close();
               <h2 class="mb-0"><a href="article.php?i=<?php echo $rSet[$i]["id"]; ?>" class="text-dark"><?php echo $rSet[$i]["title"]; ?></a></h2>
               <p>&nbsp;</p>
               <div class="card-text mb-auto"><?php echo $rSet[$i]["content"]; ?></div>
-              <div class="d-flex flex-row-reverse d-md-none" id="btn<?php echo $rSet[i]["id"]?>"><button type="button" class="btn-light btn-sm" id="read<?php echo $rSet[i]["id"]?>">Mark as read</button></div>
+              <div class="d-flex flex-row-reverse d-md-none" id="btn<?php echo $rSet[$i]["id"]?>"><button type="button" class="btn-light btn-sm" id="read<?php echo $rSet[$i]["id"]?>">Mark as read</button></div>
             </div>
            </div>
           </div>
